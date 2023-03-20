@@ -12,7 +12,8 @@ namespace Sutter_Farmer_Game
         private List<string> northBank = new List<string>();
         private List<string> southBank = new List<string>();
 
-        public Direction TheFarmer { get { return farmer; } set { farmer = value; } }
+        //Properties
+        public Direction theFarmer { get { return farmer; } set { farmer = value; } }
         public List<string> NorthBank { get { return northBank; } set { northBank = value; } }
         public List<string> SouthBank { get { return southBank; } set { southBank = value; } }
 
@@ -25,32 +26,33 @@ namespace Sutter_Farmer_Game
             farmer = Direction.North;
         }
 
+        //Checking to see if an animal has eaten anything.
         public int AnimalAteFood()
         {
-            int tempInt = 0;
+            int num = 0;
 
             if (farmer == Direction.North && southBank.Count > 1)
             {
                 for (int i = 0; i < southBank.Count; i++)
                 {
-                    if (southBank[i] == "FOX") { tempInt = tempInt + 1; }
-                    if (southBank[i] == "CHICKEN") { tempInt = tempInt + 3; }
-                    if (southBank[i] == "GRAIN") { tempInt = tempInt + 5; }
+                    if (southBank[i] == "FOX") { num = num + 1; }
+                    if (southBank[i] == "CHICKEN") { num = num + 3; }
+                    if (southBank[i] == "GRAIN") { num = num + 5; }
                 }
             }
             else if (farmer == Direction.South && northBank.Count > 1)
             {
                 for (int i = 0; i < northBank.Count; i++)
                 {
-                    if (northBank[i] == "FOX") { tempInt = tempInt + 1; }
-                    if (northBank[i] == "CHICKEN") { tempInt = tempInt + 3; }
-                    if (northBank[i] == "GRAIN") { tempInt = tempInt + 5; }
+                    if (northBank[i] == "FOX") { num = num + 1; }
+                    if (northBank[i] == "CHICKEN") { num = num + 3; }
+                    if (northBank[i] == "GRAIN") { num = num + 5; }
                 }
             }
 
             if (DetermineWin()) { return 1; }
-            else if (tempInt == 4 || tempInt == 8) { return tempInt; }
-            else if (farmer == Direction.South && northBank.Count == 3 && tempInt == 9) { return 4; }
+            else if (num == 4 || num == 8) { return num; }
+            else if (farmer == Direction.South && northBank.Count == 3 && num == 9) { return 4; }
             else { return 0; }
         }
 
@@ -58,44 +60,53 @@ namespace Sutter_Farmer_Game
         //and use the below method.
         public bool DetermineWin()
         {
-            int tempInt = 0;
+            int num = 0;
 
             for (int i = 0; i < southBank.Count; i++)
             {
-                if (southBank[i] == "FOX") { tempInt = tempInt + 1; }
-                if (southBank[i] == "CHICKEN") { tempInt = tempInt + 3; }
-                if (southBank[i] == "GRAIN") { tempInt = tempInt + 5; }
+                if (southBank[i] == "FOX") { num = num + 1; }
+                if (southBank[i] == "CHICKEN") { num = num + 3; }
+                if (southBank[i] == "GRAIN") { num = num + 5; }
             }
 
-            if (tempInt == 9) { return true; }
+            if (num == 9) { return true; }
             else { return false; }
         }
 
-        public int Move(string carry)
+        //User input for what is moving with farmer
+        public int Move(string move)
         {
-            int tempInt = 0;
+            int num = 0;
 
             //0: keep going, 1: win, 4: Fox ate Chicken, 8: Chicken ate Grain
-            if (carry == "")
+            //Moving farmer, if on north bank moving farmer to south, if south bank farmer moves north
+            if (move == "")
             {
-                if (farmer == Direction.North) { farmer = Direction.South; }
-                else if (farmer == Direction.South) { farmer = Direction.North; }
+                if (farmer == Direction.North)
+                {
+                    farmer = Direction.South;
+                }
+
+                else if (farmer == Direction.South) 
+                {    
+                    farmer = Direction.North; 
+                }
             }
             else if (farmer == Direction.North)
             {
-                northBank.Remove(carry.ToUpper());
-                southBank.Add(carry.ToUpper());
+                northBank.Remove(move.ToUpper());
+                southBank.Add(move.ToUpper());
                 farmer = Direction.South;
             }
             else if (farmer == Direction.South)
             {
-                southBank.Remove(carry.ToUpper());
-                northBank.Add(carry.ToUpper());
+                southBank.Remove(move.ToUpper());
+                northBank.Add(move.ToUpper());
                 farmer = Direction.North;
             }
 
-            tempInt = AnimalAteFood();
-            if (tempInt > 0)
+            num = AnimalAteFood();
+            if (num > 0)
             {
                 northBank.Clear();
                 southBank.Clear();
@@ -104,7 +115,7 @@ namespace Sutter_Farmer_Game
                 northBank.Add("CHICKEN");
                 northBank.Add("GRAIN");
             }
-            return tempInt;
+            return num;
         }
     }
 }

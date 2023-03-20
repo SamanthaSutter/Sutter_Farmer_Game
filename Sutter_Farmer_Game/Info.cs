@@ -10,7 +10,7 @@ namespace Sutter_Farmer_Game
         public void DisplayInfo(string assignment)
         {
             const string barrier = "***********************************************" +
-                "********************";
+                "************************************";
             WriteLine(barrier);
             WriteLine("Name:\t\t Samantha Sutter");
             WriteLine("Instructor:\t Janese Christie");
