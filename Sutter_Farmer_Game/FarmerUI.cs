@@ -2,12 +2,12 @@
 using System.Collections.Generic;
 using System.Text;
 using static System.Console;
+
 namespace Sutter_Farmer_Game
 {
     class FarmerUI
     {
-        //There was no ProcessChoice method in the UML so it was not included in this App
-
+        //Creating farmer object
         Farmer farmer = new Farmer();
 
         //The game display. Showing both banks and the river
@@ -22,13 +22,21 @@ namespace Sutter_Farmer_Game
 
         public void DisplayNorthBank()
         {
+            string grass = "V";
+            WriteLine("\n\n\n\n\n");
+            //Setting background color to green and text color to darker green
             BackgroundColor = ConsoleColor.Green;
             ForegroundColor = ConsoleColor.DarkGreen;
-            SetCursorPosition(0, 7);
-            WriteLine("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
-            WriteLine("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
-            WriteLine("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+            for (int i=0; i < 3; i++)
+            {
+                for (int x=0; x < 80; x++)
+                {
+                    Write(grass);
+                }
+                WriteLine();
+            }
             WriteLine("******************************* North Bank *************************************");
+            //Changing background color back to black and white for text
             BackgroundColor = ConsoleColor.Black;
             ForegroundColor = ConsoleColor.White;
             for (int i = 0; i < farmer.NorthBank.Count; i++)
@@ -38,37 +46,58 @@ namespace Sutter_Farmer_Game
             }
         }
 
+        //Displaying visual river to user
         public void DisplayRiver()
         {
+            string water = "~";
+            //Setting background color to blue and text color to a darker blue
             BackgroundColor = ConsoleColor.Blue;
             ForegroundColor = ConsoleColor.DarkBlue;
-            WriteLine("\n~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
-            WriteLine("~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~");
+            WriteLine("\n\n");
+            for (int i=0; i < 4; i++)
+            {
+                for (int x=0; x < 80; x++)
+                {
+                    Write(water);
+                }
+                WriteLine();
+            }
+            //Changing background color back to black and text color to white
             BackgroundColor = ConsoleColor.Black;
             ForegroundColor = ConsoleColor.White;
         }
 
+        //displaying south bank to user
         public void DisplaySouthBank()
-        { 
+        {
+            string grass = "V";
+            WriteLine("\n\n");
+            //Setting background to green and text color to a darker green
             BackgroundColor = ConsoleColor.Green;
             ForegroundColor = ConsoleColor.DarkGreen;
-            WriteLine("\nVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
-            WriteLine("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
-            WriteLine("VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV");
+            for (int i = 0; i < 3; i++)
+            {
+                for (int x = 0; x < 80; x++)
+                {
+                    Write(grass);
+                }
+                WriteLine();
+            }
             WriteLine("******************************* South Bank *************************************");
+            //Setting background to black and text color to white
             BackgroundColor = ConsoleColor.Black;
             ForegroundColor = ConsoleColor.White;
             for (int i = 0; i < farmer.SouthBank.Count; i++)
             {
                 Write(farmer.SouthBank[i]);
-                Write("  ");
+                WriteLine();
             }
         }
 
+        //Displaying user instructions
         public void DisplayWelcome()
         {
+            //Changing text to red
             ForegroundColor = ConsoleColor.Red;
             WriteLine("\n\n\n\n");
             WriteLine("\tThis is the Farmer Game! The object of the game");
@@ -81,6 +110,7 @@ namespace Sutter_Farmer_Game
             WriteLine("\tthe fox will eat the chicken. That also is not good. Either way");
             WriteLine("\tyou lose the game. If you can get the farmer, the chicken,");
             WriteLine("\tthe fox, and the grain safely across the river and intact, you win the game!");
+            //Changing text back to white
             ForegroundColor = ConsoleColor.White;
             WriteLine("\n\n\n\n");
             WriteLine("Please press any key when you are ready to start this game!");
@@ -151,8 +181,8 @@ namespace Sutter_Farmer_Game
                     }
                 }
             }
-
             Clear();
+            //Output for user error
             if (choiceError)
             {
                 WriteLine("\nThat item is not on that side of the river.");
@@ -163,11 +193,12 @@ namespace Sutter_Farmer_Game
             else if (outcome == 1)
             {
                 WriteLine("\n\n\n");
-                WriteLine("You have successfully completed the game!!");
+                WriteLine("Yay! You did it! You completed the game!!");
                 WriteLine("CONGRATULATIONS!");
                 WriteLine("\n\n\n");
                 Write("Would you like to play again? ");
                 input = ReadLine();
+                //Getting user input to play again or not
                 if (input != "" && input.ToUpper()[0] == 'Y')
                 {
                     Clear();
@@ -175,14 +206,16 @@ namespace Sutter_Farmer_Game
                 }
                 else { return false; }
             }
+            //Display for when fox and chicken are left alone on bank
             else if (outcome == 4)
             {
                 WriteLine("\n\n\n\n\n");
-                WriteLine("OH NO! The Fox Ate the Chicken!!");
+                WriteLine("NOOOO! The Fox Ate the Chicken!!");
                 WriteLine("YOU LOSE!");
                 Write("\n\n\n");
-                Write("Would you like to the play again? ");
+                Write("Would you like to play the game again? ");
                 input = ReadLine();
+                //Getting user input to play again or not
                 if (input != "" && input.ToUpper()[0] == 'Y')
                 {
                     Clear();
@@ -190,13 +223,15 @@ namespace Sutter_Farmer_Game
                 }
                 else { return false; }
             }
+            //Display if chicken and grain are left alone on bank
             else if (outcome == 8)
             {
-                WriteLine("\n\n\n\n");
-                WriteLine("Oh No! The Chicken Ate the Grain!!");
+                WriteLine("\n\n\n");
+                WriteLine("NOOO! The Chicken Ate the Grain!!");
                 WriteLine("YOU LOSE!");
                 Write("\n\n\nWould you like to play again? ");
                 input = ReadLine();
+                //Getting user input to play again or not can enter YES, yes, Y and y
                 if (input != "" && input.ToUpper()[0] == 'Y')
                 {
                     Clear();
